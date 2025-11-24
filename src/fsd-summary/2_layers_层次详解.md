@@ -108,15 +108,6 @@ src/
 │   ├── header/                # 顶部导航（包含搜索、用户菜单）
 │   ├── product-grid/          # 商品网格
 │   └── shopping-cart-sidebar/ # 购物车侧边栏
-├── features/
-│   ├── search/                # 搜索功能
-│   ├── add-to-cart/           # 加入购物车
-│   ├── user-auth/             # 用户认证
-│   └── product-favorites/     # 商品收藏
-├── entities/
-│   ├── user/                  # 用户实体
-│   ├── product/               # 商品实体
-│   └── cart/                  # 购物车实体
 └── shared/
     ├── ui/                    # UI 组件库
     ├── api/                   # API 客户端
