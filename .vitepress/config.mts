@@ -2,7 +2,7 @@ import { defineConfig } from 'vitepress'
 import { withMermaid } from "vitepress-plugin-mermaid";
 
 // https://vitepress.dev/reference/site-config
-export default defineConfig({
+export default withMermaid(defineConfig({
   title: "My Awesome Project",
   description: "A VitePress Site",
   srcDir: 'src',
@@ -10,19 +10,20 @@ export default defineConfig({
     // https://vitepress.dev/reference/default-theme-config
     nav: [
       { text: 'Home', link: '/' },
-      { text: 'Examples', link: '/markdown-examples' }
+      { text: 'Examples', link: '/markdown-examples' },
+      { text: '前端工程化', link: '/front-end/',}
     ],
 
-    sidebar: [
-      {
-        text: 'Examples',
-        items: [
-          { text: 'Markdown Examples', link: '/markdown-examples' },
-          { text: 'Runtime API Examples', link: '/api-examples' },
-          { text: 'fsd', link: '/fsd-summary/前端FSD架构总结' }
-        ]
-      }
-    ],
+    sidebar:{
+      '/front-end/': [
+        {
+          text: '前端架构',
+          items: [
+            { text: '前端 FSD 架构笔记', link: '/front-end/fsd-architecture/fsd-architecture' }
+          ]
+        }
+      ]
+    },
 
     socialLinks: [
       { icon: 'github', link: 'https://github.com/vuejs/vitepress' }
@@ -35,4 +36,4 @@ export default defineConfig({
     mermaidPlugin: {
       class: "mermaid my-class", // set additional css classes for parent container 
     },
-})
+}))
