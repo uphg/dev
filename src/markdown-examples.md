@@ -1,85 +1,166 @@
-# Markdown Extension Examples
+我建议采用**横向分层 + 纵向深入**的矩阵式结构来梳理。
 
-This page demonstrates some of the built-in markdown extensions provided by VitePress.
+以下是为你量身定制的知识库结构建议：
 
-## Syntax Highlighting
+### 核心指导思想：T型知识库
+*   **横向广度（基础的一横）：** 涵盖所有必备的基础知识，形成知识面的广度。
+*   **纵向深度（专业的一竖）：** 针对你感兴趣的Vue/React/组件库/跨端，深入到底层原理和工程实践。
 
-VitePress provides Syntax Highlighting powered by [Shiki](https://github.com/shikijs/shiki), with additional features like line-highlighting:
+---
 
-**Input**
+### 推荐的知识库目录结构（由底向上）
 
-````md
-```js{4}
-export default {
-  data () {
-    return {
-      msg: 'Highlighted!'
-    }
-  }
-}
-```
-````
+#### 第一层：地基——计算机通识与开发环境
+这是容易被忽略但决定天花板的模块。
 
-**Output**
+*   **网络与协议**：HTTP/HTTPS、TCP/IP、WebSocket、常见的状态码、跨域解决方案（CORS、代理）。
+*   **浏览器原理**：渲染引擎解析原理（HTML -> DOM， CSS -> CSSOM）、渲染树、重绘与回流、V8引擎（垃圾回收、事件循环 Event Loop）。
+*   **开发工具链**：
+    *   Git 工作流（分支管理、Rebase与Merge、Cherry-pick）。
+    *   **包管理工具**：npm/yarn/pnpm 的区别与原理（幽灵依赖问题、软/硬链接）。
+    *   **构建工具**：Webpack（核心生命周期、Loader、Plugin）、Vite（ESBuild、Rollup 原理）、Babel（AST 抽象语法树概念）。
+*   **设计模式**：单例模式、观察者模式、发布-订阅模式（这在跨端通信中非常重要）、工厂模式。
 
-```js{4}
-export default {
-  data () {
-    return {
-      msg: 'Highlighted!'
-    }
-  }
-}
-```
+#### 第二层：核心——语言核心（JS/TS）
+*   **JavaScript 核心进阶**：
+    *   **基础语法**：ES6+ 新特性（Proxy、Reflect、Decorator）。
+    *   **核心概念**：**原型链**、**闭包**、**作用域**、**this 指向**、**深浅拷贝**。
+    *   **异步编程**：Promise（手写 Promise/A+）、Generator、Async/Await、微任务与宏任务。
+*   **TypeScript 工程化**：
+    *   **类型体操**：不只是 `interface` 和 `type`，要深入到**泛型**、**内置工具类型**（Partial, Pick, ReturnType）、**类型守卫**、**逆变/协变**。
+    *   **工程配置**：`tsconfig.json` 配置详解（特别是严格模式各字段的含义）。
+    *   **实战**：如何在 Vue/React 中完美利用类型推断（如 `defineProps` 的 TS 推导）。
 
-## Custom Containers
+#### 第三层：双核驱动——Vue 与 React 生态（建议分开两大块，并列对比学习）
+*   **Vue 知识体系**（建议从 Vue 3 开始，组合式API为主）：
+    *   **核心原理**：**响应式原理**（Vue 2的 `Object.defineProperty` 与 Vue 3 的 `Proxy` 的区别与缺陷）、依赖收集、派发更新。
+    *   **源码级理解**：虚拟DOM、Diff算法（双端对比）、Compiler 与 Renderer 的分工。
+    *   **生态**：Pinia（原理，对比Vuex）、Vue-Router（路由模式、导航守卫、路由懒加载原理）。
+*   **React 知识体系**（建议从 18 版本开始）：
+    *   **核心哲学**：**函数式编程**、**不可变数据**。
+    *   **核心原理**：**Fiber 架构**（为什么需要 Fiber，时间切片）、**调和**（Reconciliation）、Diffing 策略。
+    *   **Hooks 原理**：**链表结构**、为什么 Hooks 不能写在条件语句中？手写 `useState`、`useEffect`。
+    *   **生态**：Next.js（服务端渲染、静态站点生成）、状态管理（Zustand、Redux Toolkit）。
 
-**Input**
+#### 第四层：抽象与复用——组件库封装
+这是你技能树上很高光的一环，建议单独成章。
 
-```md
-::: info
-This is an info box.
-:::
+*   **设计规范**：**原子设计理论**（ Atoms -> Molecules -> Organisms -> Templates -> Pages）。
+*   **样式解决方案**：
+    *   CSS-in-JS vs CSS Modules vs 原子化 CSS（Tailwind CSS 的原理）。
+    *   主题切换（如何利用 CSS 变量实现动态换肤）。
+*   **组件 API 设计**：
+    *   如何设计一个易用且灵活的 Props（支持 `v-model` 或受控/非受控）。
+    *   **Render Props** 和 **Slot**（插槽）的应用场景。
+    *   **组件通信**：EventBus 还是依赖注入（Provide/Inject 或 Context）。
+*   **工程化封装**：
+    *   **Monorepo** 管理（使用 pnpm workspace 管理组件库、文档、脚手架）。
+    *   **打包输出**：构建 CommonJS、ESModule、UMD 格式；Tree Shaking 的支持。
+    *   **文档**：Storybook 或 Vitepress 搭建组件演示文档。
 
-::: tip
-This is a tip.
-:::
+#### 第五层：拓展与统一——跨端框架
+*   **理念层**：**Write once, run anywhere** 的不同实现方式（编译时 vs 运行时）。
+*   **具体技术栈**：
+    *   **UniApp / Taro**：原理剖析（如何把 Vue/React 代码编译成微信小程序代码？适配层的处理）。
+    *   **React Native**：**Bridge 通信**（JS 线程与 Native 线程如何通信）、**JSI**（新的架构如何提升性能）。
+    *   **Flutter**（可选）：如果感兴趣，了解其 Skia 渲染引擎和 Dart 语言特性。
+*   **重点**：跨端方案的**异同点对比**（逻辑复用、UI 渲染一致性、性能瓶颈）。
 
-::: warning
-This is a warning.
-:::
+---
 
-::: danger
-This is a dangerous warning.
-:::
+### 如何落地执行？—— 实操建议
 
-::: details
-This is a details block.
-:::
-```
+光有目录是不够的，为了真正把知识梳理成库，建议你使用 **Obsidian** 或 **Notion**（或者本地的 Markdown 文件），并遵循以下原则：
 
-**Output**
+1.  **Mermaid 图表化（很重要）**：
+    *   不要只记文字。比如理解 Vue 响应式，画一个 `[数据] --> [Proxy拦截] --> [依赖收集] --> [触发更新]` 的流程图。一张图胜过千言万语。
+2.  **源码类笔记：带链接的线索法**：
+    *   看源码容易忘。建议记录核心源码的**关键路径**。例如：
+        *   *React.useState 入口文件：`packages/react/src/ReactHooks.js`*
+        *   *关键调用栈：`useState` -> `mountState` -> `queueUpdate`*
+3.  **专题对比（费曼学习法）**：
+    *   创建对比笔记：
+        *   `Vue_vs_React.md`：对比响应式更新 vs 不可变数据。
+        *   `Webpack_vs_Vite.md`：对比 Bundle vs Native ESM 的原理。
+4.  **沉淀可复用的代码片段**：
+    *   在组件库封装模块下，记录你的工具函数（如：`withInstall.ts` 用于封装组件库的安装方法）、自定义 Hooks（如 `useEventListener`、`useVirtualList`）。
 
-::: info
-This is an info box.
-:::
+### 总结
+你的知识库主线是：**底层原理 -> 双框架精通 -> 抽象设计 -> 跨端拓展**。
 
-::: tip
-This is a tip.
-:::
+记住，最好的知识库不是互联网的搬运工，而是你**消化后的思考**。当你遇到 Bug 解决后，把这个 Bug 的成因、断点位置、解决方案记录进去，这就是最宝贵的资产。
 
-::: warning
-This is a warning.
-:::
 
-::: danger
-This is a dangerous warning.
-:::
+---
 
-::: details
-This is a details block.
-:::
+**高级前端工程师**或**技术专家（初级）**的职级要求。这意味着你不能只会“用”框架，而要能解决复杂问题、具备架构思维并开始产生技术影响力。
 
-## More
+基于你的目标和当前的规划，我为你补充了以下几个关键维度的要求：
 
-Check out the documentation for the [full list of markdown extensions](https://vitepress.dev/guide/markdown).
+---
+
+### 一、硬核技能：从“熟练”到“精通”的进阶
+
+你现有的知识库规划已经很扎实，需要在以下几个方面**明显深化**：
+
+#### 1. 框架原理：从“使用”到“源码调优”
+- **更高要求**：不仅理解原理，更要能**根据业务场景进行优化或选型**。例如，美团高级前端岗要求“能从原理上理解框架并在必要时进行优化”。
+- **你的知识库补充点**：
+    - **Vue/React 的渲染机制对比**：什么场景下Vue的响应式更合适？什么场景下React的不可变数据流更利于排查问题？
+    - **性能调优实战**：如何定位并解决大型项目中的渲染瓶颈？（如React的`useMemo`/`useCallback`误用排查、Vue的`Watcher`数量过多问题）。
+
+#### 2. 工程化能力：从“搭建”到“设计”
+- **更高要求**：具备架构设计能力，能主导构建前端基础设施，如低代码平台、组件库、CI/CD流水线。
+- **你的知识库补充点**：
+    - **Monorepo 深度实践**：不只是会用，要理解`pnpm workspace`的依赖管理原理，如何解决大型项目的模块复用和版本冲突。
+    - **构建工具插件开发**：尝试手写一个Webpack或Vite插件，用于解决某个具体业务痛点（如自动上传CDN、代码插桩）。
+    - **代码规范与质量**：如何制定并推行团队ESLint/Prettier/Commitlint规范？如何接入单元测试（Jest/Vitest）和E2E测试（Cypress/Playwright）？
+
+#### 3. 跨端与全栈：从“单一”到“多面”
+- **更高要求**：25k岗位通常期望你具备跨端能力（小程序、React Native、Flutter）或全栈能力（Node.js/Go）。
+- **你的知识库补充点**：
+    - **跨端原理**：Taro/Uniapp 如何实现代码转换？React Native 的 JSBridge 通信机制是怎样的？
+    - **Node.js 服务能力**：至少掌握一门后端语言（Node.js/Go/Python），能独立开发BFF层（Backend For Frontend），处理简单的数据库交互和接口聚合。
+
+#### 4. AI 赋能研发：从“关注”到“应用”
+- **最新趋势**：多个大厂招聘（美团、小红书、环球数科）都明确提到了AI相关能力，这正在成为一个新的加分项，甚至是基本要求。
+- **你的知识库补充点**：
+    - **AI Coding 工具链**：熟练使用Copilot、Cursor等工具提升编码效率。
+    - **AI 集成经验**：是否有在项目中集成过AI能力？如接入大模型API实现智能客服、利用多模态能力做图片识别、或利用AI优化研发流程（如自动生成代码、智能排障）。
+
+---
+
+### 二、软技能：从“执行者”到“合作者”
+
+25k的岗位不再是单纯的“码代码”，你需要展现出更多的综合能力：
+
+- **项目管理与独当一面**：昆仑芯和苏宁的招聘都提到“良好的项目管理能力，能独当一面负责一个中大型项目的研发流程管理”。这意味着你需要具备需求拆解、任务分配、进度跟踪和风险控制的能力。
+- **业务理解与抽象能力**：美团岗位提到“对业务进行抽象建模”，苏宁提到“把握前端技术发展潮流，牵头前端新技术的研究，并用新技术推动业务发展”。你需要能听懂业务痛点，并用技术方案去解决，甚至反推业务。
+- **沟通与协作**：能够直接对接非技术客户（如医院信息科）、协调产品、测试、硬件供应商等多方资源。清晰地表达技术方案，并影响决策。
+- **指导与分享**：能够指导中级/初级工程师，参与关键技术评审，建设团队技术文档，提升团队整体能力。
+
+---
+
+### 三、如何补全你的知识库（行动计划）
+
+针对以上要求，你可以在现有知识库基础上，增加以下专题模块：
+
+#### 新模块一：性能优化实战案例库
+- 不要只记理论，记录你实际遇到的性能问题。
+- **案例模板**：`[问题现象]` -> `[性能工具排查]` (Lighthouse, React DevTools, Vue DevTools) -> `[根因分析]` -> `[解决方案]` -> `[量化收益]` (FCP减少了多少ms)。
+
+#### 新模块二：工程化架构设计
+- **低代码/可视化搭建**：记录你对低代码平台的理解（渲染器、设计器、出码模块）。
+- **前端监控体系**：如何设计一个前端监控SDK？如何采集错误、性能数据并上报？
+- **CI/CD 流水线**：记录你设计的CI/CD流程，如何实现自动化测试、构建、部署和版本回滚。
+
+#### 新模块三：AI 赋能与跨端实践
+- **AI 实战笔记**：记录你如何利用AI工具解决具体问题（例如：`用Cursor生成一个复杂的数据格式化函数`），或者你对AI前端开发趋势的思考。
+- **跨端踩坑记录**：在React Native或小程序开发中遇到的兼容性问题、性能问题及解决过程。
+
+#### 新模块四：项目管理与软技能复盘
+- 记录你主导或深度参与的项目，写下你在其中的角色、遇到的非技术困难（如需求变更、跨部门沟通）、以及你是如何解决的。这些是你面试中“讲好故事”的素材。
+
+### 总结
+
+25k薪资的核心关键词是：**深度、广度、业务、影响力**。你的知识库不应只是技术点的罗列，而应是**你解决问题的思维过程和实战证明**。当你面试时，能拿出一个你亲手优化的性能案例、一个你参与设计的工程化方案、或者你对AI如何改变前端开发的深度思考，你就具备了拿到这份薪资的说服力。
